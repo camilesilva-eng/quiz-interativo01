@@ -1,52 +1,162 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f4f4f4;
+  /* ====================================
+   1. Variáveis & Reset Básico
+   ==================================== */
+:root {
+    /* Cores Principais */
+    --primary-color: #3498db;      /* Azul para botões principais */
+    --secondary-color: #8e44ad;    /* Roxo para o botão Próxima Pergunta */
+    --correct-color: #2ecc71;      /* Verde */
+    --wrong-color: #e74c3c;        /* Vermelho */
+    --bg-light: #f4f4f4;           /* Fundo da página */
+    --bg-white: #ffffff;           /* Fundo da caixa do quiz */
+    --text-dark: #333333;          /* Texto principal */
+
+    /* Espaçamento/Bordas */
+    --border-radius-lg: 15px;
+    --border-radius-sm: 8px;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
     margin: 0;
+    padding: 0;
+}
+
+/* ====================================
+   2. Layout Base
+   ==================================== */
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Otimizado para centralizar verticalmente */
     padding: 20px;
 }
 
+/* ====================================
+   3. Caixa do Quiz
+   ==================================== */
 #quiz-box {
-    background: white;
-    padding: 25px;
-    margin: auto;
-    margin-top: 40px;
-    width: 90%;
+    background: var(--bg-white);
+    padding: 30px; /* Um pouco mais de padding */
+    width: 100%;
     max-width: 500px;
-    border-radius: 15px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
 }
 
-button {
+/* Ajuste para o título principal (H1) */
+#quiz-box h1 {
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+#question {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+#answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Usa gap em vez de margin-bottom em cada botão */
+    margin-bottom: 15px;
+}
+
+/* ====================================
+   4. Estilo dos Botões (Respostas)
+   ==================================== */
+.answer-btn {
+    /* Estilos base para todos os botões de resposta */
     width: 100%;
     padding: 12px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    background: #3498db;
-    color: white;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-sm);
+    font-size: 1em;
+    background: #f8f8f8;
+    color: var(--text-dark);
     cursor: pointer;
-    transition: .2s;
+    transition: background 0.2s, transform 0.1s;
+    text-align: left; /* Melhora a legibilidade das opções */
 }
 
-button:hover {
-    background: #2980b9;
+/* Efeito Hover */
+.answer-btn:hover:not(.disabled) {
+    background: #e9e9e9;
+    transform: translateY(-2px);
 }
 
+/* Resposta Correta (Usada para destaque) */
 .correct {
-    background: #2ecc71 !important;
+    background: var(--correct-color) !important;
+    color: white !important;
+    font-weight: bold;
+    border-color: var(--correct-color) !important;
 }
 
-.wrong {
-    background: #e74c3c !important;
+/* Resposta Incorreta */
+.incorrect { /* Renomeado de .wrong para .incorrect para seguir o padrão do JS otimizado */
+    background: var(--wrong-color) !important;
+    color: white !important;
+    font-weight: bold;
+    border-color: var(--wrong-color) !important;
+}
+
+/* Botão desativado após o clique */
+.disabled {
+    pointer-events: none; /* Impede novos cliques */
+    opacity: 0.6; /* Feedback visual que está desativado */
+}
+
+/* ====================================
+   5. Botão "Próxima Pergunta" e Tela Final
+   ==================================== */
+
+/* Estilo para todos os botões que não são respostas */
+#nextBtn, #final button {
+    /* Estilos base (sem usar a tag button pura para evitar conflito com .answer-btn) */
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: white;
+    font-weight: bold;
 }
 
 #nextBtn {
     display: none;
-    background: #8e44ad;
+    background: var(--secondary-color);
+}
+
+#nextBtn:hover {
+    background: #6a328e;
 }
 
 #final {
     display: none;
+    padding-top: 15px;
+}
+
+#final h2 {
+    color: var(--correct-color);
+    margin-bottom: 15px;
+}
+
+#final button {
+    background: var(--primary-color);
+}
+
+#final button:hover {
+    background: #2980b9;
 }
