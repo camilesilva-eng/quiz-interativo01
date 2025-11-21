@@ -1,24 +1,26 @@
-  /* ====================================
+ /* ====================================
    1. Variáveis & Reset Básico
    ==================================== */
 :root {
     /* Cores Principais */
-    --primary-color: #3498db;      /* Azul para botões principais */
-    --secondary-color: #8e44ad;    /* Roxo para o botão Próxima Pergunta */
-    --correct-color: #2ecc71;      /* Verde */
-    --wrong-color: #e74c3c;        /* Vermelho */
-    --bg-light: #f4f4f4;           /* Fundo da página */
+    --primary-color: #4A90E2;      /* Azul mais vibrante */
+    --secondary-color: #50E3C2;    /* Verde Água para o botão Próxima Pergunta */
+    --correct-color: #7ED321;      /* Verde Vívido */
+    --wrong-color: #D0021B;        /* Vermelho Intenso */
+    --bg-light: #f0f2f5;           /* Fundo da página mais suave */
     --bg-white: #ffffff;           /* Fundo da caixa do quiz */
-    --text-dark: #333333;          /* Texto principal */
+    --text-dark: #3a3a3a;          /* Texto principal */
+    --text-light-grey: #6b6b6b;    /* Texto de descrição */
+
 
     /* Espaçamento/Bordas */
     --border-radius-lg: 15px;
     --border-radius-sm: 8px;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
 }
 
 * {
-    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
+    box-sizing: border-box; 
     margin: 0;
     padding: 0;
 }
@@ -27,14 +29,14 @@
    2. Layout Base
    ==================================== */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
     text-align: center;
     background: var(--bg-light);
     color: var(--text-dark);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Otimizado para centralizar verticalmente */
+    min-height: 100vh; 
     padding: 20px;
 }
 
@@ -43,57 +45,65 @@ body {
    ==================================== */
 #quiz-box {
     background: var(--bg-white);
-    padding: 30px; /* Um pouco mais de padding */
+    padding: 30px; 
     width: 100%;
-    max-width: 500px;
+    max-width: 550px; /* Um pouco mais largo */
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow);
 }
 
-/* Ajuste para o título principal (H1) */
+/* Título principal (H1) */
 #quiz-box h1 {
-    margin-bottom: 25px;
+    margin-bottom: 10px; /* Reduzido para dar espaço à descrição */
     color: var(--primary-color);
+    font-size: 2.2em;
+}
+
+.quiz-description {
+    color: var(--text-light-grey);
+    font-size: 0.95em;
+    margin-bottom: 30px; /* Espaço para a pergunta */
 }
 
 #question {
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-weight: bold;
-    margin-bottom: 20px;
-    line-height: 1.4;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    color: var(--text-dark);
 }
 
 #answers {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Usa gap em vez de margin-bottom em cada botão */
-    margin-bottom: 15px;
+    gap: 12px; /* Espaçamento maior entre os botões */
+    margin-bottom: 20px;
 }
 
 /* ====================================
    4. Estilo dos Botões (Respostas)
    ==================================== */
 .answer-btn {
-    /* Estilos base para todos os botões de resposta */
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 14px; /* Mais padding */
+    border: 1px solid #e0e0e0; /* Borda mais suave */
     border-radius: var(--border-radius-sm);
-    font-size: 1em;
-    background: #f8f8f8;
+    font-size: 1.05em;
+    background: #fdfdfd;
     color: var(--text-dark);
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    text-align: left; /* Melhora a legibilidade das opções */
+    transition: background 0.2s ease-in-out, transform 0.1s;
+    text-align: left; 
 }
 
 /* Efeito Hover */
 .answer-btn:hover:not(.disabled) {
-    background: #e9e9e9;
+    background: #eef2f5; /* Hover mais sutil */
     transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Sombra no hover */
 }
 
-/* Resposta Correta (Usada para destaque) */
+/* Resposta Correta */
 .correct {
     background: var(--correct-color) !important;
     color: white !important;
@@ -102,7 +112,7 @@ body {
 }
 
 /* Resposta Incorreta */
-.incorrect { /* Renomeado de .wrong para .incorrect para seguir o padrão do JS otimizado */
+.incorrect {
     background: var(--wrong-color) !important;
     color: white !important;
     font-weight: bold;
@@ -111,27 +121,28 @@ body {
 
 /* Botão desativado após o clique */
 .disabled {
-    pointer-events: none; /* Impede novos cliques */
-    opacity: 0.6; /* Feedback visual que está desativado */
+    pointer-events: none;
+    opacity: 0.7;
+    filter: grayscale(20%); /* Pequeno efeito de escala de cinza para desativado */
 }
 
 /* ====================================
    5. Botão "Próxima Pergunta" e Tela Final
    ==================================== */
 
-/* Estilo para todos os botões que não são respostas */
-#nextBtn, #final button {
-    /* Estilos base (sem usar a tag button pura para evitar conflito com .answer-btn) */
+/* Estilo para #nextBtn e #restartBtn */
+#nextBtn, #restartBtn {
     width: 100%;
-    padding: 12px;
-    margin-top: 15px;
+    padding: 14px 20px; /* Mais padding */
+    margin-top: 20px;
     border: none;
     border-radius: var(--border-radius-sm);
-    font-size: 1em;
+    font-size: 1.1em;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s ease-in-out;
     color: white;
     font-weight: bold;
+    letter-spacing: 0.5px; /* Espaçamento de letras */
 }
 
 #nextBtn {
@@ -140,23 +151,31 @@ body {
 }
 
 #nextBtn:hover {
-    background: #6a328e;
+    background: #40c4a4; /* Tom mais escuro do verde água */
 }
 
 #final {
     display: none;
-    padding-top: 15px;
+    padding-top: 20px;
 }
 
 #final h2 {
-    color: var(--correct-color);
-    margin-bottom: 15px;
+    color: var(--primary-color); /* Usando a cor primária para o título final */
+    margin-bottom: 20px;
+    font-size: 2em;
 }
 
-#final button {
+#scoreText {
+    font-size: 1.3em;
+    color: var(--text-dark);
+    margin-bottom: 25px;
+}
+
+#restartBtn { /* Usando o ID para o botão de restart */
     background: var(--primary-color);
 }
 
-#final button:hover {
-    background: #2980b9;
-}
+#restartBtn:hover {
+    background: #3a7bd5; /* Tom mais escuro do azul primário */
+} 
+  
