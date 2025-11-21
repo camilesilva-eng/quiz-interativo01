@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Interativo</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="style.css" />
+    <title>Quiz Interativo - Conhecimento Geral</title> <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
     <main id="quiz-box">
         <header>
             <h1>Quiz Interativo</h1>
+            <p class="quiz-description">Teste seus conhecimentos em Cultura Geek, Esportes e História!</p>
         </header>
 
         <section id="quiz-content">
@@ -20,18 +18,18 @@
 
             <div id="answers" role="radiogroup" aria-label="Opções de Resposta"></div>
 
-            <button id="nextBtn" onclick="nextQuestion()" disabled>Próxima Pergunta</button>
-        </section>
+            <button id="nextBtn" disabled>Próxima Pergunta</button> </section>
 
 
         <div id="final" role="alert" aria-live="assertive" style="display: none;">
             <h2>Fim do Quiz!</h2>
             <p id="scoreText">Sua pontuação final será exibida aqui.</p> 
-            <button onclick="restart()">Jogar Novamente</button>
-        </div>
+            <button id="restartBtn">Jogar Novamente</button> </div>
 
     </main>
 
     <script src="script.js" defer></script>
 </body>
-</html>
+</html> 
+
+   
