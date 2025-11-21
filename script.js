@@ -1,48 +1,106 @@
-  // 1. Estrutura de Dados (Melhoria: Objeto para cada resposta)
-// Isso torna o array mais legível, e a lógica de verificação mais clara e escalável.
+  // 1. Estrutura de Dados (Perguntas sobre Geek, Esportes, História)
 const questions = [
+    // --- Categoria: GEEK ---
     {
-        question: "Qual é o maior planeta do Sistema Solar?",
+        question: "Qual é o nome do robô mordomo que serve a família Jetson?",
         answers: [
-            { text: "Terra", isCorrect: false },
-            { text: "Marte", isCorrect: false },
-            { text: "Júpiter", isCorrect: true },
-            { text: "Vênus", isCorrect: false }
+            { text: "R2-D2", isCorrect: false },
+            { text: "C-3PO", isCorrect: false },
+            { text: "Rosie", isCorrect: true },
+            { text: "Bender", isCorrect: false }
         ]
     },
     {
-        question: "Quem descobriu o Brasil?",
+        question: "Em 'O Senhor dos Anéis', qual é o nome do anel de Sauron?",
         answers: [
-            { text: "Pedro Álvares Cabral", isCorrect: true },
-            { text: "Cristóvão Colombo", isCorrect: false },
-            { text: "Dom Pedro I", isCorrect: false },
-            { text: "Vasco da Gama", isCorrect: false }
+            { text: "Anel do Poder", isCorrect: false },
+            { text: "O Um Anel", isCorrect: true },
+            { text: "Anel Mestre", isCorrect: false },
+            { text: "Anel do Destino", isCorrect: false }
         ]
     },
     {
-        question: "Qual país venceu a Copa de 2002?",
+        question: "Qual herói da Marvel é conhecido como o 'Deus do Trovão'?",
+        answers: [
+            { text: "Hulk", isCorrect: false },
+            { text: "Capitão América", isCorrect: false },
+            { text: "Homem de Ferro", isCorrect: false },
+            { text: "Thor", isCorrect: true }
+        ]
+    },
+    
+    // --- Categoria: ESPORTES ---
+    {
+        question: "Quantos jogadores compõem um time de futebol em campo?",
+        answers: [
+            { text: "9", isCorrect: false },
+            { text: "10", isCorrect: false },
+            { text: "11", isCorrect: true },
+            { text: "12", isCorrect: false }
+        ]
+    },
+    {
+        question: "Qual país sediou a Copa do Mundo de Futebol de 2014?",
         answers: [
             { text: "Alemanha", isCorrect: false },
             { text: "Brasil", isCorrect: true },
-            { text: "Argentina", isCorrect: false },
-            { text: "Itália", isCorrect: false }
+            { text: "Rússia", isCorrect: false },
+            { text: "África do Sul", isCorrect: false }
+        ]
+    },
+    {
+        question: "Em que esporte o termo 'Grand Slam' é mais comumente usado?",
+        answers: [
+            { text: "Basquete", isCorrect: false },
+            { text: "Natação", isCorrect: false },
+            { text: "Tênis", isCorrect: true },
+            { text: "Vôlei", isCorrect: false }
+        ]
+    },
+
+    // --- Categoria: HISTÓRIA ---
+    {
+        question: "Quem foi o primeiro presidente do Brasil?",
+        answers: [
+            { text: "Dom Pedro I", isCorrect: false },
+            { text: "Deodoro da Fonseca", isCorrect: true },
+            { text: "Getúlio Vargas", isCorrect: false },
+            { text: "Marechal Rondon", isCorrect: false }
+        ]
+    },
+    {
+        question: "Em que ano a Segunda Guerra Mundial terminou?",
+        answers: [
+            { text: "1939", isCorrect: false },
+            { text: "1942", isCorrect: false },
+            { text: "1945", isCorrect: true },
+            { text: "1950", isCorrect: false }
+        ]
+    },
+    {
+        question: "Qual civilização antiga construiu as Pirâmides de Gizé?",
+        answers: [
+            { text: "Romanos", isCorrect: false },
+            { text: "Gregos", isCorrect: false },
+            { text: "Egípcios", isCorrect: true },
+            { text: "Maias", isCorrect: false }
         ]
     }
 ];
 
-// 2. Referências do DOM (Melhoria: Armazenar referências globalmente)
-// Reduz as chamadas repetidas a document.getElementById()
+// 2. Referências do DOM
 const questionElement = document.getElementById("question");
 const answersContainer = document.getElementById("answers");
 const nextButton = document.getElementById("nextBtn");
 const finalScreen = document.getElementById("final");
 const scoreTextElement = document.getElementById("scoreText");
-const quizBox = document.getElementById("quiz-box"); // Adicionado para controle de exibição
+const quizBox = document.getElementById("quiz-box"); 
+const restartButton = document.getElementById("restartBtn"); // Nova referência
 
 // 3. Variáveis de Estado
-let currentQuestionIndex = 0; // Renomeado de 'index' para clareza
+let currentQuestionIndex = 0; 
 let score = 0;
-let answerSelected = false; // Nova flag para evitar cliques múltiplos
+let answerSelected = false; 
 
 // 4. Funções Principais
 
@@ -54,9 +112,9 @@ function restart() {
 
     // Controla a exibição das telas
     finalScreen.style.display = "none";
-    quizBox.style.display = "block"; // Garante que a caixa principal está visível
+    quizBox.style.display = "block"; 
     questionElement.style.display = "block";
-    answersContainer.style.display = "block";
+    answersContainer.style.display = "flex"; // Garante que answers fica visível
     nextButton.style.display = "none";
     
     loadQuestion();
@@ -64,23 +122,20 @@ function restart() {
 
 /** Carrega e exibe a pergunta atual. */
 function loadQuestion() {
-    resetState(); // Limpa o estado anterior
+    resetState(); 
     const currentQuestion = questions[currentQuestionIndex];
     
-    // Exibe o número da pergunta e o texto
     questionElement.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
 
     currentQuestion.answers.forEach((answer, i) => {
         const btn = document.createElement("button");
         btn.textContent = answer.text;
-        btn.classList.add("answer-btn"); // Adiciona classe para estilização e delegação de evento
+        btn.classList.add("answer-btn");
         
-        // Armazena a correção no dataset em vez de no evento, mais limpo
         if (answer.isCorrect) {
             btn.dataset.correct = "true";
         }
         
-        // Atribui o índice da resposta (i) para a verificação
         btn.dataset.index = i; 
         
         answersContainer.appendChild(btn);
@@ -90,16 +145,17 @@ function loadQuestion() {
 /** Limpa os botões e oculta o botão "Próxima Pergunta". */
 function resetState() {
     nextButton.style.display = "none";
+    nextButton.disabled = true; // Desabilita o botão "Próxima Pergunta"
     while (answersContainer.firstChild) {
         answersContainer.removeChild(answersContainer.firstChild);
     }
 }
 
-/** * Verifica a resposta selecionada e atualiza a pontuação.
+/** Verifica a resposta selecionada e atualiza a pontuação.
  * @param {HTMLElement} selectedBtn - O botão clicado.
  */
 function checkAnswer(selectedBtn) {
-    if (answerSelected) return; // Se a resposta já foi selecionada, ignora
+    if (answerSelected) return; 
 
     answerSelected = true;
     const isCorrect = selectedBtn.dataset.correct === "true";
@@ -107,7 +163,7 @@ function checkAnswer(selectedBtn) {
     // 1. Desativa todos os botões e remove o clique
     Array.from(answersContainer.children).forEach(button => {
         button.disabled = true;
-        button.classList.add("disabled"); // Classe CSS para visualmente indicar desativado
+        button.classList.add("disabled"); 
     });
 
     // 2. Aplica estilos e atualiza pontuação
@@ -123,15 +179,15 @@ function checkAnswer(selectedBtn) {
         }
     }
 
-    // 3. Exibe o botão de próxima pergunta
+    // 3. Exibe e habilita o botão de próxima pergunta
     nextButton.style.display = "block";
+    nextButton.disabled = false;
 }
-
 
 /** Avança para a próxima pergunta ou finaliza o quiz. */
 function nextQuestion() {
     currentQuestionIndex++;
-    answerSelected = false; // Reseta a flag para a próxima pergunta
+    answerSelected = false; 
 
     if (currentQuestionIndex < questions.length) {
         loadQuestion();
@@ -148,20 +204,15 @@ function finishQuiz() {
         `Você acertou ${score} de ${questions.length} perguntas!`;
 }
 
-// 5. Delegação de Eventos (Melhoria: Centraliza o listener)
-// Em vez de adicionar um listener a cada botão criado (no loadQuestion), 
-// adicionamos um único listener ao container pai (answersContainer).
+// 5. Delegação de Eventos (Centraliza os listeners no JS)
 answersContainer.addEventListener("click", (e) => {
-    // Verifica se o clique foi em um botão de resposta e não no container em si
     if (e.target.matches(".answer-btn")) {
         checkAnswer(e.target);
     }
 });
 
+nextButton.addEventListener("click", nextQuestion);
+restartButton.addEventListener("click", restart);
 
-// As funções 'nextQuestion' e 'restart' são chamadas pelo HTML (onclick), 
-// mas é bom remover o 'onclick' do HTML e usar addEventListener para uma separação 
-// de responsabilidades mais limpa (veja Observações).
-
-// Inicia o Quiz
+// Inicia o Quiz ao carregar a página
 restart();
