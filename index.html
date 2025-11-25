@@ -1,28 +1,28 @@
-</head>
-<body>
-    <main class="quiz-container" role="main">
-        <header class="quiz-header">
-            <h1>Desafio de Conhecimento</h1>
-            <p class="score-display" id="score" aria-live="polite">Pontos: 0</p>
-        </header>
-        <section class="mascot-feedback" aria-labelledby="mascot-title">
-            <h2 id="mascot-title" class="sr-only">Mascote do Quiz</h2>
-            <img 
-                src="mascote.png"  <!-- Alterado para imagem local (baixe e salve como 'mascote.png') -->
-                alt="Mascote Robô Amigável do Quiz" 
-                class="mascot-img" 
-            />
-            <p id="characterMessage" class="mascot-message" role="status" aria-live="assertive">Bem-vindo ao Quiz! Vamos jogar?</p>
-        </section>
-        <section id="question-area" class="question-area" aria-labelledby="question">
-            <h2 id="question" aria-live="polite">Carregando pergunta...</h2>
-            
-            <div id="answers" class="answers-grid" role="group" aria-labelledby="question">
-                <!-- Opções de resposta serão inseridas aqui dinamicamente -->
-            </div>
-            <button id="next-btn" class="control-btn hidden" aria-disabled="true" disabled>Próxima Pergunta</button>
-        </section>
-    </main>
+    <div class="quiz-frame"> <!-- Novo wrapper para o quadro centralizado -->
+        <main class="quiz-container" role="main">
+            <header class="quiz-header">
+                <h1>Desafio de Conhecimento</h1>
+                <p class="score-display" id="score" aria-live="polite">Pontos: 0</p>
+            </header>
+            <section class="mascot-feedback" aria-labelledby="mascot-title">
+                <h2 id="mascot-title" class="sr-only">Mascote do Quiz</h2>
+                <img 
+                    src="mascote.png"  <!-- Imagem local (baixe e salve como 'mascote.png') -->
+                    alt="Mascote Robô Amigável do Quiz" 
+                    class="mascot-img" 
+                />
+                <p id="characterMessage" class="mascot-message" role="status" aria-live="assertive">Bem-vindo ao Quiz! Vamos jogar?</p>
+            </section>
+            <section id="question-area" class="question-area" aria-labelledby="question">
+                <h2 id="question" aria-live="polite">Carregando pergunta...</h2>
+                
+                <div id="answers" class="answers-grid" role="group" aria-labelledby="question">
+                    <!-- Opções de resposta serão inseridas aqui dinamicamente -->
+                </div>
+                <button id="next-btn" class="control-btn hidden" aria-disabled="true" disabled>Próxima Pergunta</button>
+            </section>
+        </main>
+    </div>
     <script src="script.js" defer></script>
 </body>
 </html>
