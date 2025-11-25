@@ -1,17 +1,12 @@
-/*
-** ESTILOS GERAIS E LAYOUT (BODY & MAIN)
-*/
+/* ESTILOS GERAIS E LAYOUT */
 body {
     /* Fundo degradê vibrante */
     background: linear-gradient(135deg, #4a00e0, #8e2de2);
-    /* Garante altura total da viewport */
     min-height: 100vh;
-    /* Fonte e cor padrão */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     margin: 0;
     padding: 0;
-    
     /* Centraliza o quiz-container */
     display: flex;
     justify-content: center;
@@ -23,19 +18,17 @@ body {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     
-    padding: 40px; /* Aumentei um pouco o padding */
+    padding: 40px;
     border-radius: 20px;
     /* Sombra suave para destacar o container */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); 
     
-    width: 90%; /* Responsividade básica */
-    max-width: 450px; /* Limite de largura para desktop */
+    width: 90%; 
+    max-width: 450px; 
     text-align: center;
 }
 
-/*
-** ESTILOS DO PLACAR E TÍTULOS
-*/
+/* PLACAR E TÍTULOS */
 .score-display {
     text-align: right;
     font-size: 1.1em;
@@ -54,21 +47,19 @@ h1 {
 h2#question {
     font-size: 1.3em;
     margin-bottom: 20px;
-    min-height: 50px; /* Garante que a altura não salte ao carregar o texto */
+    min-height: 50px; 
 }
 
-/*
-** ESTILOS DO MASCOTE / FEEDBACK
-*/
+/* MASCOTE / FEEDBACK */
 .mascot-feedback {
     margin-bottom: 20px;
 }
 
 .mascot-img {
-    width: 100px; /* Levemente menor para mais refinamento */
+    width: 100px; 
     height: auto;
-    border-radius: 50%; /* Se você quiser um efeito de avatar */
-    border: 3px solid #ffcc00; /* Borda de destaque */
+    border-radius: 50%; /* Torna a imagem redonda */
+    border: 3px solid #ffcc00; 
     object-fit: cover;
 }
 
@@ -76,59 +67,53 @@ h2#question {
     margin-top: 10px;
     font-weight: 500;
     font-style: italic;
-    min-height: 20px; /* Espaço para a mensagem aparecer sem mover o layout */
+    min-height: 20px; 
 }
 
-/*
-** ESTILOS DAS OPÇÕES DE RESPOSTA
-*/
+/* OPÇÕES DE RESPOSTA */
 .answers-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Espaçamento entre as opções */
+    gap: 10px; 
     margin-top: 20px;
 }
 
 .answer-btn {
-    /* Resetando o estilo original da sua classe answer-btn */
     background: #ffffff;
     color: #333;
     padding: 12px;
     width: 100%;
-    border: 2px solid transparent; /* Adicione uma borda transparente para o feedback */
+    border: 2px solid transparent; 
     border-radius: 10px;
-    text-align: left; /* Melhora a leitura das opções */
+    text-align: left; 
     font-size: 1em;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
 
-.answer-btn:hover {
+.answer-btn:hover:not(:disabled) { 
     background: #e0e0e0;
-    transform: translateY(-2px); /* Efeito de leve elevação ao passar o mouse */
+    transform: translateY(-2px); /* Efeito de elevação */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* ESTILOS DE FEEDBACK (Definidos no JS) */
+/* ESTILOS DE FEEDBACK (Classes adicionadas pelo JS) */
 .correct {
-    background-color: #4CAF50 !important; /* Verde - Corrigida */
+    background-color: #4CAF50 !important; /* Verde - Acerto */
     color: white !important;
     border-color: #2e7d32 !important;
     font-weight: bold;
 }
 
 .incorrect {
-    background-color: #f44336 !important; /* Vermelho - Errada */
+    background-color: #f44336 !important; /* Vermelho - Erro */
     color: white !important;
     border-color: #c62828 !important;
     opacity: 0.8;
 }
 
-/*
-** ESTILOS DOS BOTÕES DE CONTROLE
-*/
+/* BOTÕES DE CONTROLE */
 .control-btn {
-    /* Aplicando o estilo ao #next-btn (agora .control-btn) */
     background: #ffcc00;
     border: none;
     padding: 12px 25px;
@@ -146,22 +131,7 @@ h2#question {
     transform: scale(1.03);
 }
 
-/*
-** ESTILOS UTILITÁRIOS
-*/
+/* UTILS */
 .hidden {
     display: none !important;
-}
-
-/* RESPONSIVIDADE PARA TELAS MENORES */
-@media (max-width: 500px) {
-    .quiz-container {
-        padding: 20px;
-    }
-    h1 {
-        font-size: 1.7em;
-    }
-    .control-btn {
-        width: 100%; /* Botão de próxima ocupa a largura total no mobile */
-    }
 }
