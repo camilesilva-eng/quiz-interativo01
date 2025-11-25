@@ -1,41 +1,29 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio de Conhecimento | Quiz Interativo</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <main class="quiz-container">
-
+    <main class="quiz-container" role="main">
         <header class="quiz-header">
-            <p class="score-display" id="score">Pontos: 0</p>
+            <h1>Desafio de Conhecimento</h1>
+            <p class="score-display" id="score" aria-live="polite">Pontos: 0</p>
         </header>
-
-        <section class="mascot-feedback">
+        <section class="mascot-feedback" aria-labelledby="mascot-title">
+            <h2 id="mascot-title" class="sr-only">Mascote do Quiz</h2>
             <img 
                 src="https://i.imgur.com/ko6zH8p.png" 
                 alt="Mascote Robô Amigável do Quiz" 
                 class="mascot-img" 
             />
-            <p id="characterMessage" class="mascot-message" role="status">Bem-vindo ao Quiz! Vamos jogar?</p>
+            <p id="characterMessage" class="mascot-message" role="status" aria-live="assertive">Bem-vindo ao Quiz! Vamos jogar?</p>
         </section>
-
-        <h1>Desafio de Conhecimento</h1>
-
-        <section id="question-area" class="question-area">
+        <section id="question-area" class="question-area" aria-labelledby="question">
             <h2 id="question" aria-live="polite">Carregando pergunta...</h2>
             
             <div id="answers" class="answers-grid" role="group" aria-labelledby="question">
-                </div>
-
-            <button id="next-btn" class="control-btn hidden" aria-disabled="true">Próxima Pergunta</button>
+                <!-- Opções de resposta serão inseridas aqui dinamicamente -->
+            </div>
+            <button id="next-btn" class="control-btn hidden" aria-disabled="true" disabled>Próxima Pergunta</button>
         </section>
-
     </main>
-
-<script src="script.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
+
