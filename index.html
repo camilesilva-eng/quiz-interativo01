@@ -7,37 +7,29 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-<body>
 
-    <div class="mascote-container">
-        <div id="mascote">
-            <span class="mascote-emoji">⚡️</span>
-            <span class="mascote-nome">Cypher-Bot</span>
-        </div>
+<body>
+    <div class="container">
+        <h1 class="title">QUIZ NEON</h1>
+        <button id="startBtn" class="start-btn">INICIAR</button>
     </div>
 
-    <div class="quiz-card">
-        <div class="header-ui">
-            <span class="score-display">PONTUAÇÃO: <span id="pontuacao">0</span></span>
-            <span class="question-count">QUESTÃO: <span id="contador-questoes">1</span> / <span id="total-questoes"></span></span>
+    <!-- Tela do Quiz -->
+    <div id="quizBox" class="quiz hidden">
+        <div class="question-box">
+            <p id="question"></p>
         </div>
 
-        <div class="pergunta-container">
-            <h2 id="pergunta-titulo"></h2>
-        </div>
+        <div id="answers" class="answers"></div>
 
-        <div id="opcoes-respostas" class="opcoes-grid">
-            </div>
+        <p id="progress" class="progress"></p>
+    </div>
 
-        <button id="btn-proxima" disabled class="btn-principal">
-            PRÓXIMA FASE
-        </button>
-
-        <div id="resultado-final" class="escondido">
-            <h2>FIM DO QUIZ</h2>
-            <p>Sua Pontuação Final: <span id="resultado-pontuacao"></span></p>
-            <button id="btn-reiniciar" class="btn-principal">REINICIAR</button>
-        </div>
+    <!-- Tela Final -->
+    <div id="resultBox" class="result hidden">
+        <h2>Resultado Final</h2>
+        <p id="scoreText"></p>
+        <button id="restartBtn" class="start-btn">JOGAR NOVAMENTE</button>
     </div>
 
     <script src="script.js"></script>
