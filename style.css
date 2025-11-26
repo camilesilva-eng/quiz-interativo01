@@ -1,237 +1,103 @@
-/*
-    ESTILIZAÇÃO GERAL E EFEITO NEON
-*/
-
-:root {
-    /* Paleta de Cores Neon */
-    --cor-fundo-escuro: #12002f;
-    --cor-primaria-neon: #ff00ff; /* Magenta/Rosa Brilhante */
-    --cor-secundaria-neon: #00ffff; /* Ciano Brilhante */
-    --cor-texto-principal: #ffffff;
-    --cor-borda-suave: rgba(255, 255, 255, 0.1);
-    --sombra-neon: 0 0 5px var(--cor-primaria-neon), 0 0 15px var(--cor-primaria-neon);
-}
-
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Orbitron', sans-serif; /* Fonte futurista */
-    transition: all 0.3s ease-in-out; /* Transições suaves */
+    box-sizing: border-box;
+    font-family: "Orbitron", sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #1f0842, #0d011f); /* Degradê roxo escuro */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    background: linear-gradient(135deg, #0a0f24, #000);
+    color: #fff;
+    text-align: center;
     min-height: 100vh;
-    color: var(--cor-texto-principal);
-    padding: 20px 10px;
-    position: relative;
-    overflow-x: hidden;
-}
-
-/* Efeito de brilho ambiente no fundo */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at top left, rgba(255, 0, 255, 0.1), transparent 50%),
-                radial-gradient(circle at bottom right, rgba(0, 255, 255, 0.1), transparent 50%);
-    z-index: -1;
-}
-
-/*
-    CARD PRINCIPAL (PERGUNTA)
-*/
-.quiz-card {
-    width: 100%;
-    max-width: 450px; /* Formato vertical/mobile */
-    background: rgba(0, 0, 0, 0.5);
-    border: 2px solid var(--cor-borda-suave);
-    border-radius: 20px;
-    padding: 30px 20px;
-    box-shadow: var(--sombra-neon); /* Glow sutil */
-    backdrop-filter: blur(5px); /* Efeito de vidro fosco */
-}
-
-/*
-    ELEMENTOS DA UI (PONTUAÇÃO/CONTADOR)
-*/
-.header-ui {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8em;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--cor-borda-suave);
-}
-
-.score-display, .question-count {
-    color: var(--cor-secundaria-neon);
-    text-shadow: 0 0 5px var(--cor-secundaria-neon);
-}
-
-/*
-    PERGUNTA
-*/
-.pergunta-container h2 {
-    font-size: 1.3em;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--cor-texto-principal);
-    text-shadow: 0 0 7px var(--cor-texto-principal);
-}
-
-/*
-    BOTÕES DE OPÇÕES
-*/
-.opcoes-grid {
-    display: grid;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.option-btn {
-    width: 100%;
-    padding: 15px;
-    background: var(--cor-fundo-escuro);
-    border: 2px solid var(--cor-secundaria-neon);
-    color: var(--cor-texto-principal);
-    font-size: 1em;
-    font-weight: 400;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 0 5px var(--cor-secundaria-neon);
-    transition: transform 0.1s, background 0.3s, box-shadow 0.3s;
-    text-align: left; /* Para parecer mais limpo */
-}
-
-.option-btn:hover:not([disabled]) {
-    transform: translateY(-3px);
-    background: rgba(0, 255, 255, 0.1);
-    box-shadow: 0 0 10px var(--cor-secundaria-neon);
-}
-
-/* EFEITOS DE FEEDBACK (CORRETA/INCORRETA) */
-.option-btn.correct {
-    background: #005a00; /* Verde escuro */
-    border-color: #00ff00;
-    box-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00; /* Neon verde */
-    animation: correct-pulse 0.5s;
-}
-
-.option-btn.incorrect {
-    background: #5a0000; /* Vermelho escuro */
-    border-color: #ff0000;
-    box-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000; /* Neon vermelho */
-    animation: incorrect-shake 0.3s;
-}
-
-.option-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/*
-    BOTÃO PRINCIPAL ("PRÓXIMA FASE")
-*/
-.btn-principal {
-    width: 100%;
-    padding: 15px 20px;
-    background: linear-gradient(90deg, var(--cor-primaria-neon), var(--cor-secundaria-neon));
-    border: none;
-    color: var(--cor-fundo-escuro);
-    font-weight: 900;
-    font-size: 1.1em;
-    border-radius: 10px;
-    cursor: pointer;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.5); /* Profundidade e brilho */
-}
-
-.btn-principal:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-.btn-principal:hover:not([disabled]) {
-    opacity: 0.9;
-    transform: scale(1.01);
-}
-
-/*
-    MASCOTE DIGITAL (TOQUE FINAL)
-*/
-.mascote-container {
-    margin-bottom: 20px;
-    text-align: center;
-    animation: float 4s ease-in-out infinite; /* Efeito flutuante */
-}
-
-#mascote {
-    font-size: 3em;
-    color: var(--cor-secundaria-neon);
-    text-shadow: 0 0 15px var(--cor-secundaria-neon), 0 0 30px rgba(0, 255, 255, 0.5);
-    background: rgba(0, 255, 255, 0.05);
-    border-radius: 50%;
-    padding: 10px;
-    display: inline-block;
-}
-
-.mascote-nome {
-    display: block;
-    font-size: 0.6em;
-    margin-top: 5px;
-    letter-spacing: 2px;
-    color: var(--cor-primaria-neon);
-    text-shadow: var(--sombra-neon);
-}
-
-/*
-    RESULTADO FINAL
-*/
-#resultado-final {
-    text-align: center;
     padding: 20px;
-    border: 2px dashed var(--cor-primaria-neon);
-    border-radius: 10px;
 }
 
-#resultado-final h2 {
-    color: var(--cor-primaria-neon);
-    text-shadow: var(--sombra-neon);
-    margin-bottom: 10px;
+.container {
+    margin-top: 100px;
 }
 
-.escondido {
+.title {
+    font-size: 3rem;
+    color: #00e5ff;
+    text-shadow: 0 0 20px #00e5ff;
+    margin-bottom: 40px;
+}
+
+.start-btn {
+    padding: 15px 40px;
+    background: #8a2be2;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 15px #8a2be2;
+    transition: 0.3s;
+}
+
+.start-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #ff2ed1;
+}
+
+.hidden {
     display: none;
 }
 
-/*
-    ANIMAÇÕES
-*/
-@keyframes float {
-    0% { transform: translatey(0px); }
-    50% { transform: translatey(-10px); }
-    100% { transform: translatey(0px); }
+.quiz {
+    margin-top: 50px;
 }
 
-@keyframes correct-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+.question-box {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid #00e5ff;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px #00e5ff;
 }
 
-@keyframes incorrect-shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.answer-btn {
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid #8a2be2;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.answer-btn:hover {
+    background: #8a2be2;
+    box-shadow: 0 0 20px #8a2be2;
+}
+
+.correct {
+    background: #39ff14 !important;
+    border-color: #39ff14 !important;
+    color: #000 !important;
+}
+
+.wrong {
+    background: #ff073a !important;
+    border-color: #ff073a !important;
+}
+
+.result {
+    margin-top: 80px;
+}
+
+.progress {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #00e5ff;
 }
