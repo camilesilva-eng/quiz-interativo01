@@ -1,76 +1,85 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Seleção dos elementos
+const home = document.getElementById("home");
+const quiz = document.getElementById("quiz");
+const result = document.getElementById("result");
 
-    const startBtn = document.getElementById("startBtn");
-    const quizBox = document.getElementById("quizBox");
-    const resultBox = document.getElementById("resultBox");
-    const questionEl = document.getElementById("question");
-    const answersEl = document.getElementById("answers");
-    const scoreText = document.getElementById("scoreText");
-    const progressText = document.getElementById("progress");
+const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
 
-    let currentQuestion = 0;
-    let score = 0;
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const progressEl = document.getElementById("progress");
+const scoreEl = document.getElementById("score");
 
-    const questions = [
-        {
-            question: "Qual é o maior planeta do Sistema Solar?",
-            answers: ["Terra", "Júpiter", "Marte", "Saturno"],
-            correct: 1
-        },
-        {
-            question: "Quem pintou a Mona Lisa?",
-            answers: ["Leonardo da Vinci", "Picasso", "Michelangelo", "Van Gogh"],
-            correct: 0
-        }
-    ];
+let current = 0;
+let score = 0;
 
-    startBtn.addEventListener("click", startQuiz);
+// PERGUNTAS (10 novas)
+const questions = [
+    { q: "Qual é o maior planeta do Sistema Solar?", a: ["Terra", "Marte", "Júpiter", "Vênus"], c: 2 },
+    { q: "Quem pintou a Mona Lisa?", a: ["Michelangelo", "Leonardo da Vinci", "Picasso", "Van Gogh"], c: 1 },
+    { q: "Quanto é 12 × 8?", a: ["96", "82", "108", "112"], c: 0 },
+    { q: "Qual é o país do samba e futebol?", a: ["Argentina", "Espanha", "Brasil", "Portugal"], c: 2 },
+    { q: "Qual animal é conhecido como o rei da selva?", a: ["Leão", "Tigre", "Elefante", "Urso"], c: 0 },
+    { q: "Qual é o oceano maior do mundo?", a: ["Atlântico", "Pacífico", "Índico", "Ártico"], c: 1 },
+    { q: "Qual é a capital da França?", a: ["Paris", "Londres", "Roma", "Berlim"], c: 0 },
+    { q: "Quem descobriu o Brasil?", a: ["Cabral", "Vasco da Gama", "Cristóvão Colombo", "Dom Pedro"], c: 0 },
+    { q: "Quanto é 50 + 50?", a: ["70", "80", "100", "120"], c: 2 },
+    { q: "Qual é a cor do céu em um dia claro?", a: ["Verde", "Azul", "Amarelo", "Vermelho"], c: 1 },
+];
 
-    function startQuiz() {
-        document.querySelector(".container").classList.add("hidden");
-        quizBox.classList.remove("hidden");
-        loadQuestion();
+// Iniciar o Quiz
+startBtn.onclick = () => {
+    home.classList.remove("active");
+    quiz.classList.add("active");
+    loadQuestion();
+};
+
+// Carregar pergunta
+function loadQuestion() {
+    const q = questions[current];
+
+    questionEl.textContent = q.q;
+    answersEl.innerHTML = "";
+    progressEl.textContent = `Pergunta ${current + 1} de ${questions.length}`;
+
+    q.a.forEach((resp, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = resp;
+        btn.className = "answer-btn";
+        btn.onclick = () => check(i, btn);
+        answersEl.appendChild(btn);
+    });
+}
+
+// Verificar resposta
+function check(i, btn) {
+    let correct = questions[current].c;
+
+    if (i === correct) {
+        btn.classList.add("correct");
+        score++;
+    } else {
+        btn.classList.add("wrong");
     }
 
-    function loadQuestion() {
-        const q = questions[currentQuestion];
-
-        questionEl.textContent = q.question;
-        answersEl.innerHTML = "";
-        progressText.textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
-
-        q.answers.forEach((ans, index) => {
-            const btn = document.createElement("button");
-            btn.textContent = ans;
-            btn.classList.add("answer-btn");
-
-            btn.onclick = () => checkAnswer(index, btn);
-            answersEl.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(selected, button) {
-        if (selected === questions[currentQuestion].correct) {
-            button.classList.add("correct");
-            score++;
+    setTimeout(() => {
+        current++;
+        if (current < questions.length) {
+            loadQuestion();
         } else {
-            button.classList.add("wrong");
+            finish();
         }
+    }, 700);
+}
 
-        setTimeout(() => {
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
-            } else {
-                finishQuiz();
-            }
-        }, 700);
-    }
+// Final do quiz
+function finish() {
+    quiz.classList.remove("active");
+    result.classList.add("active");
 
-    function finishQuiz() {
-        quizBox.classList.add("hidden");
-        resultBox.classList.remove("hidden");
-        scoreText.textContent = `Você fez ${score} ponto(s)!`;
-    }
+    scoreEl.textContent = `Você fez ${score} ponto(s) de ${questions.length}!`;
+}
 
-});
+// Reiniciar quiz
+restartBtn.onclick = () => location.reload();
