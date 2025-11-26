@@ -1,4 +1,4 @@
-// Banco de Perguntas
+// Banco de Perguntas (adicione quantas quiser)
 const perguntas = [
     {
         pergunta: "Qual elemento químico tem o símbolo 'Fe'?",
@@ -19,6 +19,28 @@ const perguntas = [
         pergunta: "Em que ano a Proclamação da República do Brasil ocorreu?",
         opcoes: ["1822", "1889", "1901", "1808"],
         respostaCorreta: "1889"
+    },
+
+    // ⭐ NOVAS PERGUNTAS ⭐
+    {
+        pergunta: "Qual animal é conhecido como o 'Rei da Selva'?",
+        opcoes: ["Leão", "Elefante", "Tigre", "Guepardo"],
+        respostaCorreta: "Leão"
+    },
+    {
+        pergunta: "Quanto é 12 × 8?",
+        opcoes: ["96", "108", "88", "104"],
+        respostaCorreta: "96"
+    },
+    {
+        pergunta: "Qual é o continente mais populoso do mundo?",
+        opcoes: ["África", "Europa", "Ásia", "América"],
+        respostaCorreta: "Ásia"
+    },
+    {
+        pergunta: "Qual é o maior oceano do planeta?",
+        opcoes: ["Atlântico", "Índico", "Pacífico", "Ártico"],
+        respostaCorreta: "Pacífico"
     }
 ];
 
@@ -33,6 +55,13 @@ const resultadoFinal = document.getElementById('resultado-final');
 const quizCard = document.querySelector('.quiz-card');
 const btnReiniciar = document.getElementById('btn-reiniciar');
 const resultadoPontuacao = document.getElementById('resultado-pontuacao');
+const btnVoltar = document.createElement("button");
+
+// Criar botão VOLTAR AO INÍCIO
+btnVoltar.textContent = "VOLTAR AO INÍCIO";
+btnVoltar.classList.add("btn-principal");
+btnVoltar.style.marginTop = "15px";
+resultadoFinal.appendChild(btnVoltar);
 
 // Variáveis de Estado
 let perguntaAtualIndex = 0;
@@ -72,24 +101,21 @@ function selecionarResposta(e) {
     if (respostaSelecionada) return;
     respostaSelecionada = true;
 
-    const botaoClicado = e.target;
-    const isCorreta = botaoClicado.dataset.correct;
+    const botao = e.target;
+    const correta = botao.dataset.correct;
 
-    if (isCorreta) {
+    if (correta) {
         pontuacao++;
         pontuacaoDisplay.textContent = pontuacao;
-        botaoClicado.classList.add('correct');
+        botao.classList.add('correct');
     } else {
-        botaoClicado.classList.add('incorrect');
+        botao.classList.add('incorrect');
         Array.from(opcoesRespostas.children)
             .find(btn => btn.dataset.correct)
             .classList.add('correct');
     }
 
-    Array.from(opcoesRespostas.children).forEach(button => {
-        button.disabled = true;
-    });
-
+    Array.from(opcoesRespostas.children).forEach(btn => btn.disabled = true);
     btnProxima.disabled = false;
 }
 
@@ -104,8 +130,8 @@ function proximaPergunta() {
 }
 
 function exibirResultado() {
-    quizCard.classList.add('escondido');
-    resultadoFinal.classList.remove('escondido');
+    quizCard.classList.add("escondido");
+    resultadoFinal.classList.remove("escondido");
     resultadoPontuacao.textContent = `${pontuacao} / ${perguntas.length}`;
 }
 
@@ -119,13 +145,20 @@ function resetarEstado() {
     respostaSelecionada = false;
 }
 
+// EVENTOS
 btnProxima.addEventListener('click', proximaPergunta);
 
 btnReiniciar.addEventListener('click', () => {
     perguntaAtualIndex = 0;
     pontuacao = 0;
-    pontuacaoDisplay.textContent = '0';
+    pontuacaoDisplay.textContent = "0";
     exibirPergunta();
 });
 
+// VOLTAR PARA O INÍCIO (reload)
+btnVoltar.addEventListener("click", () => {
+    window.location.reload();
+});
+
+// INÍCIO
 exibirPergunta();
