@@ -1,226 +1,144 @@
-/**
- * DADOS DO QUIZ: 10 perguntas de Conhecimento Geral, Geek e História.
- */
-const questions = [
+// Banco de Perguntas
+const perguntas = [
     {
-        question: "Qual planeta é conhecido como Planeta Vermelho?",
-        answers: [
-            { text: "Júpiter", correct: false },
-            { text: "Marte", correct: true },
-            { text: "Saturno", correct: false },
-            { text: "Vênus", correct: false }
-        ]
+        pergunta: "Qual elemento químico tem o símbolo 'Fe'?",
+        opcoes: ["Fósforo", "Ferro", "Flúor", "Fermium"],
+        respostaCorreta: "Ferro"
     },
     {
-        question: "Em que ano a Segunda Guerra Mundial terminou?",
-        answers: [
-            { text: "1942", correct: false },
-            { text: "1945", correct: true },
-            { text: "1950", correct: false },
-            { text: "1939", correct: false }
-        ]
+        pergunta: "Quem pintou a famosa obra 'Guernica'?",
+        opcoes: ["Salvador Dalí", "Pablo Picasso", "Claude Monet", "Vincent van Gogh"],
+        respostaCorreta: "Pablo Picasso"
     },
     {
-        question: "Qual elemento químico tem o símbolo 'Fe'?",
-        answers: [
-            { text: "Flúor", correct: false },
-            { text: "Fósforo", correct: false },
-            { text: "Ferro", correct: true },
-            { text: "Cobre", correct: false }
-        ]
+        pergunta: "Qual planeta é conhecido como a 'Estrela da Manhã'?",
+        opcoes: ["Marte", "Júpiter", "Vênus", "Saturno"],
+        respostaCorreta: "Vênus"
     },
     {
-        question: "Quem é o autor da famosa peça 'Romeu e Julieta'?",
-        answers: [
-            { text: "Charles Dickens", correct: false },
-            { text: "William Shakespeare", correct: true },
-            { text: "Jane Austen", correct: false },
-            { text: "George Orwell", correct: false }
-        ]
+        pergunta: "Em que ano a Proclamação da República do Brasil ocorreu?",
+        opcoes: ["1822", "1889", "1901", "1808"],
+        respostaCorreta: "1889"
     },
-    {
-        question: "Qual empresa criou o sistema operacional Android?",
-        answers: [
-            { text: "Apple", correct: false },
-            { text: "Microsoft", correct: false },
-            { text: "Samsung", correct: false },
-            { text: "Google", correct: true }
-        ]
-    },
-    {
-        question: "Na série 'Game of Thrones', qual é o nome do continente principal onde a história se passa?",
-        answers: [
-            { text: "Essos", correct: false },
-            { text: "Westeros", correct: true },
-            { text: "Sothoryos", correct: false },
-            { text: "Ulthos", correct: false }
-        ]
-    },
-    {
-        question: "Qual é o maior oceano do mundo?",
-        answers: [
-            { text: "Atlântico", correct: false },
-            { text: "Índico", correct: false },
-            { text: "Pacífico", correct: true },
-            { text: "Ártico", correct: false }
-        ]
-    },
-    {
-        question: "Em que país está localizada a Grande Barreira de Coral?",
-        answers: [
-            { text: "México", correct: false },
-            { text: "Brasil", correct: false },
-            { text: "Austrália", correct: true },
-            { text: "Indonésia", correct: false }
-        ]
-    },
-    {
-        question: "Qual é a capital do Canadá?",
-        answers: [
-            { text: "Toronto", correct: false },
-            { text: "Vancouver", correct: false },
-            { text: "Montreal", correct: false },
-            { text: "Ottawa", correct: true }
-        ]
-    },
-    {
-        question: "Qual famoso cientista desenvolveu a Teoria da Relatividade?",
-        answers: [
-            { text: "Isaac Newton", correct: false },
-            { text: "Albert Einstein", correct: true },
-            { text: "Galileu Galilei", correct: false },
-            { text: "Nikola Tesla", correct: false }
-        ]
-    }
 ];
 
-// VARIÁVEIS DE ESTADO
-let currentQuestionIndex = 0;
-let score = 0;
-let isAnswerSelected = false;
+// Elementos do DOM
+const perguntaTitulo = document.getElementById('pergunta-titulo');
+const opcoesRespostas = document.getElementById('opcoes-respostas');
+const btnProxima = document.getElementById('btn-proxima');
+const contadorQuestoes = document.getElementById('contador-questoes');
+const totalQuestoes = document.getElementById('total-questoes');
+const pontuacaoDisplay = document.getElementById('pontuacao');
+const resultadoFinal = document.getElementById('resultado-final');
+const quizCard = document.querySelector('.quiz-card');
+const btnReiniciar = document.getElementById('btn-reiniciar');
+const resultadoPontuacao = document.getElementById('resultado-pontuacao');
 
-// ELEMENTOS DO DOM
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const nextBtn = document.getElementById("next-btn");
-const scoreEl = document.getElementById("score");
-const characterMessageEl = document.getElementById("characterMessage");
+// Variáveis de Estado
+let perguntaAtualIndex = 0;
+let pontuacao = 0;
+let respostaSelecionada = false;
 
-/**
- * Inicia o quiz, resetando pontuação e índice.
- */
-function startQuiz() {
-    currentQuestionIndex = 0;
-    score = 0;
-    scoreEl.textContent = `Pontos: 0`;
-    nextBtn.classList.add("hidden");
-    nextBtn.textContent = "Próxima Pergunta"; // Reseta o texto
-    showQuestion();
-}
+// Inicialização
+totalQuestoes.textContent = perguntas.length;
 
-/**
- * Exibe a pergunta atual e as opções.
- */
-function showQuestion() {
-    isAnswerSelected = false;
-    nextBtn.classList.add("hidden");
+// Função para exibir a pergunta e as opções
+function exibirPergunta() {
+    resetarEstado();
     
-    const q = questions[currentQuestionIndex];
+    // Esconde resultado e mostra o card do quiz
+    resultadoFinal.classList.add('escondido');
+    quizCard.classList.remove('escondido');
+
+    // Atualiza o contador de questões
+    contadorQuestoes.textContent = perguntaAtualIndex + 1;
     
-    // Atualiza a pergunta
-    questionEl.textContent = `${currentQuestionIndex + 1}. ${q.question}`;
-    scoreEl.textContent = `Pontos: ${score}`;
-    characterMessageEl.textContent = "Escolha a resposta correta para ganhar pontos!";
-    
-    // Limpa e cria os botões
-    answersEl.innerHTML = "";
-    
-    q.answers.forEach(answer => {
-        const btn = document.createElement("button");
-        btn.textContent = answer.text;
-        btn.classList.add("answer-btn");
+    // Carrega a pergunta atual
+    const perguntaAtual = perguntas[perguntaAtualIndex];
+    perguntaTitulo.textContent = perguntaAtual.pergunta;
+
+    // Cria os botões de opção dinamicamente
+    perguntaAtual.opcoes.forEach(opcao => {
+        const button = document.createElement('button');
+        button.textContent = opcao;
+        button.classList.add('option-btn');
+        opcoesRespostas.appendChild(button);
         
-        // Armazena a resposta correta no dataset do botão
-        if (answer.correct) {
-            btn.dataset.correct = "true";
+        if (opcao === perguntaAtual.respostaCorreta) {
+            button.dataset.correct = true; // Marca a resposta correta para verificação
         }
         
-        btn.addEventListener("click", selectAnswer);
-        answersEl.appendChild(btn);
+        button.addEventListener('click', selecionarResposta);
     });
 }
 
-/**
- * Lida com a seleção de uma resposta e fornece feedback.
- */
-function selectAnswer(e) {
-    // 1. Previne cliques múltiplos
-    if (isAnswerSelected) return;
-    isAnswerSelected = true;
+// Função chamada ao clicar em uma opção
+function selecionarResposta(e) {
+    if (respostaSelecionada) return; // Impede cliques múltiplos
+    respostaSelecionada = true;
+    
+    const botaoClicado = e.target;
+    const isCorreta = botaoClicado.dataset.correct;
 
-    const selectedBtn = e.target;
-    const isCorrect = selectedBtn.dataset.correct === "true";
-
-    // 2. Feedback visual e pontuação
-    if (isCorrect) {
-        score++;
-        selectedBtn.classList.add("correct");
-        characterMessageEl.textContent = "Boa! Você acertou! 😄";
+    // Aplica o estilo de feedback visual (Neon Green/Red)
+    if (isCorreta) {
+        pontuacao++;
+        pontuacaoDisplay.textContent = pontuacao;
+        botaoClicado.classList.add('correct');
     } else {
-        selectedBtn.classList.add("incorrect");
-        characterMessageEl.textContent = "Ops! Errou 😢. A correta está destacada!";
-        
-        // Encontra e destaca a resposta correta para aprendizado
-        Array.from(answersEl.children).forEach(button => {
-            if (button.dataset.correct === "true") {
-                button.classList.add("correct");
-            }
-        });
+        botaoClicado.classList.add('incorrect');
+        // Revela a resposta correta em neon verde
+        Array.from(opcoesRespostas.children).find(btn => btn.dataset.correct).classList.add('correct');
     }
 
-    // 3. Desabilita todos os botões e exibe o 'Próxima'
-    Array.from(answersEl.children).forEach(button => {
+    // Desabilita todos os botões após a seleção
+    Array.from(opcoesRespostas.children).forEach(button => {
         button.disabled = true;
     });
 
-    scoreEl.textContent = `Pontos: ${score}`;
-    nextBtn.classList.remove("hidden");
+    // Habilita o botão "Próxima Fase"
+    btnProxima.disabled = false;
 }
 
-/**
- * Lida com o avanço para a próxima pergunta ou finalização.
- */
-nextBtn.addEventListener("click", () => {
-    currentQuestionIndex++;
-
-    if (currentQuestionIndex < questions.length) {
-        showQuestion();
+// Função para avançar ou finalizar o quiz
+function proximaPergunta() {
+    perguntaAtualIndex++;
+    
+    if (perguntaAtualIndex < perguntas.length) {
+        exibirPergunta();
     } else {
-        endQuiz();
+        exibirResultado();
     }
+}
+
+// Função para exibir a tela de resultado final
+function exibirResultado() {
+    quizCard.classList.add('escondido');
+    resultadoFinal.classList.remove('escondido');
+    resultadoPontuacao.textContent = `${pontuacao} / ${perguntas.length}`;
+}
+
+// Função para limpar os botões e resetar o estado
+function resetarEstado() {
+    // Esconde o botão Próxima Fase
+    btnProxima.disabled = true;
+    
+    // Remove os botões de opção antigos
+    while (opcoesRespostas.firstChild) {
+        opcoesRespostas.removeChild(opcoesRespostas.firstChild);
+    }
+    
+    respostaSelecionada = false;
+}
+
+// Event Listeners
+btnProxima.addEventListener('click', proximaPergunta);
+btnReiniciar.addEventListener('click', () => {
+    perguntaAtualIndex = 0;
+    pontuacao = 0;
+    pontuacaoDisplay.textContent = '0';
+    exibirPergunta();
 });
 
-/**
- * Finaliza o quiz e exibe o resultado final.
- */
-function endQuiz() {
-    questionEl.textContent = "⭐ Quiz Finalizado! ⭐";
-    answersEl.innerHTML = "";
-    
-    // Exibe a pontuação final de forma clara
-    const finalScoreMessage = document.createElement('h2');
-    finalScoreMessage.innerHTML = `Sua Pontuação Final: <span>${score}/${questions.length}</span>`;
-    finalScoreMessage.style.color = '#ffcc00'; 
-    answersEl.appendChild(finalScoreMessage);
-    
-    characterMessageEl.textContent = `Parabéns! Você acertou ${score} de ${questions.length} perguntas. 🎉`;
-
-    nextBtn.textContent = "Jogar Novamente";
-    nextBtn.classList.remove("hidden");
-    
-    // Muda a função do botão para reiniciar o quiz
-    nextBtn.onclick = startQuiz;
-}
-
-// INÍCIO DO QUIZ
-startQuiz();
+// Inicia o Quiz
+exibirPergunta();
