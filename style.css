@@ -6,60 +6,55 @@
 }
 
 body {
-    background: linear-gradient(135deg, #0a0f24, #000);
-    color: #fff;
+    background: linear-gradient(135deg, #000428, #004e92);
+    color: white;
     text-align: center;
-    min-height: 100vh;
     padding: 20px;
+    min-height: 100vh;
 }
 
-.container {
-    margin-top: 100px;
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
 }
 
 .title {
     font-size: 3rem;
+    margin-top: 80px;
     color: #00e5ff;
     text-shadow: 0 0 20px #00e5ff;
-    margin-bottom: 40px;
 }
 
-.start-btn {
+.btn {
     padding: 15px 40px;
-    background: #8a2be2;
+    font-size: 1.4rem;
+    margin-top: 30px;
     border: none;
     border-radius: 50px;
-    font-size: 1.4rem;
-    color: #fff;
-    cursor: pointer;
+    background: #8a2be2;
+    color: white;
     box-shadow: 0 0 15px #8a2be2;
-    transition: 0.3s;
+    cursor: pointer;
+    transition: .3s;
 }
 
-.start-btn:hover {
+.btn:hover {
     transform: scale(1.1);
     box-shadow: 0 0 25px #ff2ed1;
 }
 
-.hidden {
-    display: none;
-}
-
-.quiz {
-    margin-top: 50px;
-}
-
-.question-box {
-    background: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 20px;
-    border: 2px solid #00e5ff;
-    margin-bottom: 30px;
-    font-size: 1.5rem;
+.question {
+    margin-top: 60px;
+    font-size: 1.6rem;
+    color: #00e5ff;
     text-shadow: 0 0 10px #00e5ff;
 }
 
 .answers {
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -67,24 +62,24 @@ body {
 
 .answer-btn {
     padding: 15px;
-    background: rgba(255,255,255,0.05);
-    border: 2px solid #8a2be2;
     border-radius: 15px;
-    font-size: 1.2rem;
+    border: 2px solid #8a2be2;
+    background: rgba(255,255,255,0.1);
+    color: white;
     cursor: pointer;
-    transition: 0.3s;
-    color: #fff;
+    font-size: 1.2rem;
+    transition: .3s;
 }
 
 .answer-btn:hover {
     background: #8a2be2;
-    box-shadow: 0 0 20px #8a2be2;
+    box-shadow: 0 0 15px #8a2be2;
 }
 
 .correct {
     background: #39ff14 !important;
     border-color: #39ff14 !important;
-    color: #000 !important;
+    color: black !important;
 }
 
 .wrong {
@@ -92,12 +87,8 @@ body {
     border-color: #ff073a !important;
 }
 
-.result {
-    margin-top: 80px;
-}
-
 .progress {
     margin-top: 20px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #00e5ff;
 }
