@@ -1,144 +1,87 @@
-// Banco de Perguntas
-const perguntas = [
+const startBtn = document.getElementById("startBtn");
+const quizBox = document.getElementById("quizBox");
+const resultBox = document.getElementById("resultBox");
+const restartBtn = document.getElementById("restartBtn");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const scoreText = document.getElementById("scoreText");
+const progressText = document.getElementById("progress");
+
+let currentQuestion = 0;
+let score = 0;
+
+const questions = [
     {
-        pergunta: "Qual elemento químico tem o símbolo 'Fe'?",
-        opcoes: ["Fósforo", "Ferro", "Flúor", "Fermium"],
-        respostaCorreta: "Ferro"
+        question: "Qual é o maior planeta do Sistema Solar?",
+        answers: ["Terra", "Júpiter", "Marte", "Saturno"],
+        correct: 1
     },
     {
-        pergunta: "Quem pintou a famosa obra 'Guernica'?",
-        opcoes: ["Salvador Dalí", "Pablo Picasso", "Claude Monet", "Vincent van Gogh"],
-        respostaCorreta: "Pablo Picasso"
+        question: "Quem pintou a Mona Lisa?",
+        answers: ["Leonardo da Vinci", "Picasso", "Michelangelo", "Van Gogh"],
+        correct: 0
     },
     {
-        pergunta: "Qual planeta é conhecido como a 'Estrela da Manhã'?",
-        opcoes: ["Marte", "Júpiter", "Vênus", "Saturno"],
-        respostaCorreta: "Vênus"
+        question: "Quanto é 9 x 7?",
+        answers: ["56", "63", "72", "69"],
+        correct: 1
     },
     {
-        pergunta: "Em que ano a Proclamação da República do Brasil ocorreu?",
-        opcoes: ["1822", "1889", "1901", "1808"],
-        respostaCorreta: "1889"
-    },
+        question: "Quem descobriu o Brasil?",
+        answers: ["Pedro Álvares Cabral", "Dom Pedro I", "Vasco da Gama", "Cristóvão Colombo"],
+        correct: 0
+    }
 ];
 
-// Elementos do DOM
-const perguntaTitulo = document.getElementById('pergunta-titulo');
-const opcoesRespostas = document.getElementById('opcoes-respostas');
-const btnProxima = document.getElementById('btn-proxima');
-const contadorQuestoes = document.getElementById('contador-questoes');
-const totalQuestoes = document.getElementById('total-questoes');
-const pontuacaoDisplay = document.getElementById('pontuacao');
-const resultadoFinal = document.getElementById('resultado-final');
-const quizCard = document.querySelector('.quiz-card');
-const btnReiniciar = document.getElementById('btn-reiniciar');
-const resultadoPontuacao = document.getElementById('resultado-pontuacao');
+startBtn.addEventListener("click", startQuiz);
+restartBtn.addEventListener("click", () => location.reload());
 
-// Variáveis de Estado
-let perguntaAtualIndex = 0;
-let pontuacao = 0;
-let respostaSelecionada = false;
+function startQuiz() {
+    document.querySelector(".container").classList.add("hidden");
+    quizBox.classList.remove("hidden");
+    loadQuestion();
+}
 
-// Inicialização
-totalQuestoes.textContent = perguntas.length;
+function loadQuestion() {
+    const q = questions[currentQuestion];
 
-// Função para exibir a pergunta e as opções
-function exibirPergunta() {
-    resetarEstado();
-    
-    // Esconde resultado e mostra o card do quiz
-    resultadoFinal.classList.add('escondido');
-    quizCard.classList.remove('escondido');
+    questionEl.textContent = q.question;
+    answersEl.innerHTML = "";
+    progressText.textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
 
-    // Atualiza o contador de questões
-    contadorQuestoes.textContent = perguntaAtualIndex + 1;
-    
-    // Carrega a pergunta atual
-    const perguntaAtual = perguntas[perguntaAtualIndex];
-    perguntaTitulo.textContent = perguntaAtual.pergunta;
+    q.answers.forEach((ans, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans;
+        btn.classList.add("answer-btn");
 
-    // Cria os botões de opção dinamicamente
-    perguntaAtual.opcoes.forEach(opcao => {
-        const button = document.createElement('button');
-        button.textContent = opcao;
-        button.classList.add('option-btn');
-        opcoesRespostas.appendChild(button);
-        
-        if (opcao === perguntaAtual.respostaCorreta) {
-            button.dataset.correct = true; // Marca a resposta correta para verificação
+        btn.onclick = () => checkAnswer(index, btn);
+        answersEl.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected, button) {
+    const q = questions[currentQuestion];
+
+    if (selected === q.correct) {
+        button.classList.add("correct");
+        score++;
+    } else {
+        button.classList.add("wrong");
+    }
+
+    setTimeout(() => {
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            finishQuiz();
         }
-        
-        button.addEventListener('click', selecionarResposta);
-    });
+    }, 700);
 }
 
-// Função chamada ao clicar em uma opção
-function selecionarResposta(e) {
-    if (respostaSelecionada) return; // Impede cliques múltiplos
-    respostaSelecionada = true;
-    
-    const botaoClicado = e.target;
-    const isCorreta = botaoClicado.dataset.correct;
-
-    // Aplica o estilo de feedback visual (Neon Green/Red)
-    if (isCorreta) {
-        pontuacao++;
-        pontuacaoDisplay.textContent = pontuacao;
-        botaoClicado.classList.add('correct');
-    } else {
-        botaoClicado.classList.add('incorrect');
-        // Revela a resposta correta em neon verde
-        Array.from(opcoesRespostas.children).find(btn => btn.dataset.correct).classList.add('correct');
-    }
-
-    // Desabilita todos os botões após a seleção
-    Array.from(opcoesRespostas.children).forEach(button => {
-        button.disabled = true;
-    });
-
-    // Habilita o botão "Próxima Fase"
-    btnProxima.disabled = false;
+function finishQuiz() {
+    quizBox.classList.add("hidden");
+    resultBox.classList.remove("hidden");
+    scoreText.textContent = `Você fez ${score} ponto(s)!`;
 }
-
-// Função para avançar ou finalizar o quiz
-function proximaPergunta() {
-    perguntaAtualIndex++;
-    
-    if (perguntaAtualIndex < perguntas.length) {
-        exibirPergunta();
-    } else {
-        exibirResultado();
-    }
-}
-
-// Função para exibir a tela de resultado final
-function exibirResultado() {
-    quizCard.classList.add('escondido');
-    resultadoFinal.classList.remove('escondido');
-    resultadoPontuacao.textContent = `${pontuacao} / ${perguntas.length}`;
-}
-
-// Função para limpar os botões e resetar o estado
-function resetarEstado() {
-    // Esconde o botão Próxima Fase
-    btnProxima.disabled = true;
-    
-    // Remove os botões de opção antigos
-    while (opcoesRespostas.firstChild) {
-        opcoesRespostas.removeChild(opcoesRespostas.firstChild);
-    }
-    
-    respostaSelecionada = false;
-}
-
-// Event Listeners
-btnProxima.addEventListener('click', proximaPergunta);
-btnReiniciar.addEventListener('click', () => {
-    perguntaAtualIndex = 0;
-    pontuacao = 0;
-    pontuacaoDisplay.textContent = '0';
-    exibirPergunta();
-});
-
-// Inicia o Quiz
-exibirPergunta();
