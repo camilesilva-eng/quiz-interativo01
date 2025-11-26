@@ -1,74 +1,70 @@
 let questions = [
     {
-        question: "Qual é a capital do Brasil?",
-        answers: ["Rio de Janeiro", "São Paulo", "Brasília", "Bahia"],
-        correct: 2
-    },
-    {
-        question: "Quanto é 5 + 7?",
-        answers: ["10", "12", "14", "15"],
+        q: "Qual é a capital do Brasil?",
+        options: ["Rio de Janeiro", "Brasília", "São Paulo", "Bahia"],
         correct: 1
     },
     {
-        question: "Quem pintou a Mona Lisa?",
-        answers: ["Michelangelo", "Leonardo da Vinci", "Van Gogh", "Picasso"],
+        q: "Quanto é 10 + 5?",
+        options: ["12", "15", "20", "30"],
         correct: 1
     },
     {
-        question: "Qual planeta é conhecido como Planeta Vermelho?",
-        answers: ["Terra", "Júpiter", "Marte", "Vênus"],
+        q: "Quem descobriu o Brasil?",
+        options: ["Pedro Álvares Cabral", "Dom Pedro I", "Machado de Assis", "Tiradentes"],
+        correct: 0
+    },
+    {
+        q: "Qual planeta é vermelho?",
+        options: ["Terra", "Júpiter", "Marte", "Vênus"],
         correct: 2
     },
     {
-        question: "Qual animal é conhecido como o rei da selva?",
-        answers: ["Tigre", "Leão", "Elefante", "Onça"],
+        q: "Qual animal é o rei da selva?",
+        options: ["Tigre", "Leão", "Onça", "Lobo"],
         correct: 1
     }
 ];
 
-let currentQuestion = 0;
+let index = 0;
 let score = 0;
 
 function loadQuestion() {
-    if (currentQuestion >= questions.length) {
+    if (index >= questions.length) {
         endQuiz();
         return;
     }
 
-    document.getElementById("question").innerText = questions[currentQuestion].question;
+    document.getElementById("question").innerText = questions[index].q;
 
-    let btns = document.querySelectorAll(".btn");
-    questions[currentQuestion].answers.forEach((ans, i) => {
-        btns[i].innerText = ans;
+    let buttons = document.querySelectorAll(".optionBtn");
+    questions[index].options.forEach((opt, i) => {
+        buttons[i].innerText = opt;
     });
 }
 
-function selectAnswer(choice) {
-    if (choice === questions[currentQuestion].correct) {
+function checkAnswer(choice) {
+    if (choice === questions[index].correct) {
         score++;
     }
-    currentQuestion++;
+    index++;
     loadQuestion();
 }
 
 function endQuiz() {
-    document.getElementById("question-container").classList.add("hide");
+    document.getElementById("quizBox").classList.add("hidden");
+    document.getElementById("resultBox").classList.remove("hidden");
 
-    let result = document.getElementById("result");
-    result.classList.remove("hide");
-    result.innerHTML = `<h2>Você terminou!</h2>
-                        <p>Sua pontuação: <strong>${score}/${questions.length}</strong></p>`;
-
-    document.getElementById("restartBtn").classList.remove("hide");
+    document.getElementById("scoreText").innerHTML =
+        `Você acertou <strong>${score}</strong> de <strong>${questions.length}</strong> perguntas!`;
 }
 
 function restartQuiz() {
-    currentQuestion = 0;
+    index = 0;
     score = 0;
 
-    document.getElementById("question-container").classList.remove("hide");
-    document.getElementById("result").classList.add("hide");
-    document.getElementById("restartBtn").classList.add("hide");
+    document.getElementById("quizBox").classList.remove("hidden");
+    document.getElementById("resultBox").classList.add("hidden");
 
     loadQuestion();
 }
