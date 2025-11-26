@@ -1,28 +1,45 @@
-    <div class="quiz-frame"> <!-- Novo wrapper para o quadro centralizado -->
-        <main class="quiz-container" role="main">
-            <header class="quiz-header">
-                <h1>Desafio de Conhecimento</h1>
-                <p class="score-display" id="score" aria-live="polite">Pontos: 0</p>
-            </header>
-            <section class="mascot-feedback" aria-labelledby="mascot-title">
-                <h2 id="mascot-title" class="sr-only">Mascote do Quiz</h2>
-                <img 
-                    src="mascote.png"  <!-- Imagem local (baixe e salve como 'mascote.png') -->
-                    alt="Mascote Robô Amigável do Quiz" 
-                    class="mascot-img" 
-                />
-                <p id="characterMessage" class="mascot-message" role="status" aria-live="assertive">Bem-vindo ao Quiz! Vamos jogar?</p>
-            </section>
-            <section id="question-area" class="question-area" aria-labelledby="question">
-                <h2 id="question" aria-live="polite">Carregando pergunta...</h2>
-                
-                <div id="answers" class="answers-grid" role="group" aria-labelledby="question">
-                    <!-- Opções de resposta serão inseridas aqui dinamicamente -->
-                </div>
-                <button id="next-btn" class="control-btn hidden" aria-disabled="true" disabled>Próxima Pergunta</button>
-            </section>
-        </main>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Neon | Conhecimentos Gerais</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="mascote-container">
+        <div id="mascote">
+            <span class="mascote-emoji">⚡️</span>
+            <span class="mascote-nome">Cypher-Bot</span>
+        </div>
     </div>
-    <script src="script.js" defer></script>
+
+    <div class="quiz-card">
+        <div class="header-ui">
+            <span class="score-display">PONTUAÇÃO: <span id="pontuacao">0</span></span>
+            <span class="question-count">QUESTÃO: <span id="contador-questoes">1</span> / <span id="total-questoes"></span></span>
+        </div>
+
+        <div class="pergunta-container">
+            <h2 id="pergunta-titulo"></h2>
+        </div>
+
+        <div id="opcoes-respostas" class="opcoes-grid">
+            </div>
+
+        <button id="btn-proxima" disabled class="btn-principal">
+            PRÓXIMA FASE
+        </button>
+
+        <div id="resultado-final" class="escondido">
+            <h2>FIM DO QUIZ</h2>
+            <p>Sua Pontuação Final: <span id="resultado-pontuacao"></span></p>
+            <button id="btn-reiniciar" class="btn-principal">REINICIAR</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
