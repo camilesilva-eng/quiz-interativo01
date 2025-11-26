@@ -3,30 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Quiz Neon | Conhecimentos Gerais</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
+    <div class="mascote-container">
+        <div id="mascote">
+            <span class="mascote-emoji">⚡️</span>
+            <span class="mascote-nome">Cypher-Bot</span>
+        </div>
+    </div>
 
-        <h1>Quiz</h1>
-
-        <div id="quizBox">
-            <p id="question">Carregando pergunta...</p>
-
-            <button class="optionBtn" onclick="checkAnswer(0)">A</button>
-            <button class="optionBtn" onclick="checkAnswer(1)">B</button>
-            <button class="optionBtn" onclick="checkAnswer(2)">C</button>
-            <button class="optionBtn" onclick="checkAnswer(3)">D</button>
+    <div class="quiz-card">
+        <div class="header-ui">
+            <span class="score-display">PONTUAÇÃO: <span id="pontuacao">0</span></span>
+            <span class="question-count">QUESTÃO: <span id="contador-questoes">1</span> / <span id="total-questoes"></span></span>
         </div>
 
-        <div id="resultBox" class="hidden">
-            <h2>Resultado</h2>
-            <p id="scoreText"></p>
-            <button id="restart" onclick="restartQuiz()">Voltar ao Início</button>
+        <div class="pergunta-container">
+            <h2 id="pergunta-titulo"></h2>
         </div>
 
+        <div id="opcoes-respostas" class="opcoes-grid">
+            </div>
+
+        <button id="btn-proxima" disabled class="btn-principal">
+            PRÓXIMA FASE
+        </button>
+
+        <div id="resultado-final" class="escondido">
+            <h2>FIM DO QUIZ</h2>
+            <p>Sua Pontuação Final: <span id="resultado-pontuacao"></span></p>
+            <button id="btn-reiniciar" class="btn-principal">REINICIAR</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
