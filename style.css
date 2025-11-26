@@ -13,10 +13,10 @@ body {
     min-height: 100vh;
 }
 
+/* CRÍTICO: Estas classes controlam qual tela está visível */
 .screen {
     display: none;
 }
-
 .screen.active {
     display: block;
 }
@@ -58,6 +58,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-width: 600px; 
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .answer-btn {
@@ -71,11 +74,12 @@ body {
     transition: .3s;
 }
 
-.answer-btn:hover {
+.answer-btn:hover:not(:disabled) { /* Não aplica hover se estiver desabilitado */
     background: #8a2be2;
     box-shadow: 0 0 15px #8a2be2;
 }
 
+/* Classes para feedback de resposta */
 .correct {
     background: #39ff14 !important;
     border-color: #39ff14 !important;
