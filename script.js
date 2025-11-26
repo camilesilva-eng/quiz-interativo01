@@ -1,10 +1,10 @@
-// Seleção dos elementos
+// Seleção dos elementos (ID's do seu HTML)
 const home = document.getElementById("home");
 const quiz = document.getElementById("quiz");
 const result = document.getElementById("result");
 
 const startBtn = document.getElementById("startBtn");
-const restartBtn = document.getElementById("restartBtn");
+const restartBtn = document.getElementById("restartBtn"); 
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
@@ -14,7 +14,7 @@ const scoreEl = document.getElementById("score");
 let current = 0;
 let score = 0;
 
-// PERGUNTAS (10 novas)
+// PERGUNTAS (Seu array de perguntas)
 const questions = [
     { q: "Qual é o maior planeta do Sistema Solar?", a: ["Terra", "Marte", "Júpiter", "Vênus"], c: 2 },
     { q: "Quem pintou a Mona Lisa?", a: ["Michelangelo", "Leonardo da Vinci", "Picasso", "Van Gogh"], c: 1 },
@@ -28,41 +28,51 @@ const questions = [
     { q: "Qual é a cor do céu em um dia claro?", a: ["Verde", "Azul", "Amarelo", "Vermelho"], c: 1 },
 ];
 
-// Iniciar o Quiz
+// 🟢 1. Botão INICIAR (Funcionando)
 startBtn.onclick = () => {
     home.classList.remove("active");
     quiz.classList.add("active");
     loadQuestion();
 };
 
-// Carregar pergunta
+// Função que carrega a pergunta no HTML
 function loadQuestion() {
     const q = questions[current];
 
+    // Exibe a pergunta e o progresso
     questionEl.textContent = q.q;
-    answersEl.innerHTML = "";
+    answersEl.innerHTML = ""; 
     progressEl.textContent = `Pergunta ${current + 1} de ${questions.length}`;
 
+    // Cria os botões de resposta e anexa a função de clique
     q.a.forEach((resp, i) => {
         const btn = document.createElement("button");
         btn.textContent = resp;
         btn.className = "answer-btn";
-        btn.onclick = () => check(i, btn);
+        btn.onclick = () => check(i, btn); // << Função que verifica a resposta
         answersEl.appendChild(btn);
     });
 }
 
-// Verificar resposta
+// 🟢 2. Lógica dos Botões de Resposta (Funcionando)
 function check(i, btn) {
     let correct = questions[current].c;
 
+    // Desabilita todos os botões para garantir apenas um clique por pergunta
+    Array.from(answersEl.children).forEach(button => {
+        button.disabled = true;
+    });
+
     if (i === correct) {
         btn.classList.add("correct");
-        score++;
+        score++; // Incrementa a pontuação
     } else {
         btn.classList.add("wrong");
+        // Opcional: Destaca a resposta correta
+        Array.from(answersEl.children)[correct].classList.add("correct");
     }
 
+    // Avança para a próxima pergunta após um pequeno delay
     setTimeout(() => {
         current++;
         if (current < questions.length) {
@@ -78,8 +88,12 @@ function finish() {
     quiz.classList.remove("active");
     result.classList.add("active");
 
+    // 🟢 3. Exibição da Pontuação (Funcionando)
     scoreEl.textContent = `Você fez ${score} ponto(s) de ${questions.length}!`;
 }
 
-// Reiniciar quiz
-restartBtn.onclick = () => location.reload();
+// 🟢 4. Botão REINICIAR / VOLTAR AO INÍCIO (Funcionando)
+restartBtn.onclick = () => {
+    // Recarregar a página é a maneira mais simples e eficaz de resetar o quiz
+    location.reload(); 
+};
