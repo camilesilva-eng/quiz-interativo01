@@ -1,164 +1,76 @@
-// Banco de Perguntas (adicione quantas quiser)
-const perguntas = [
+let questions = [
     {
-        pergunta: "Qual elemento químico tem o símbolo 'Fe'?",
-        opcoes: ["Fósforo", "Ferro", "Flúor", "Fermium"],
-        respostaCorreta: "Ferro"
+        question: "Qual é a capital do Brasil?",
+        answers: ["Rio de Janeiro", "São Paulo", "Brasília", "Bahia"],
+        correct: 2
     },
     {
-        pergunta: "Quem pintou a famosa obra 'Guernica'?",
-        opcoes: ["Salvador Dalí", "Pablo Picasso", "Claude Monet", "Vincent van Gogh"],
-        respostaCorreta: "Pablo Picasso"
+        question: "Quanto é 5 + 7?",
+        answers: ["10", "12", "14", "15"],
+        correct: 1
     },
     {
-        pergunta: "Qual planeta é conhecido como a 'Estrela da Manhã'?",
-        opcoes: ["Marte", "Júpiter", "Vênus", "Saturno"],
-        respostaCorreta: "Vênus"
+        question: "Quem pintou a Mona Lisa?",
+        answers: ["Michelangelo", "Leonardo da Vinci", "Van Gogh", "Picasso"],
+        correct: 1
     },
     {
-        pergunta: "Em que ano a Proclamação da República do Brasil ocorreu?",
-        opcoes: ["1822", "1889", "1901", "1808"],
-        respostaCorreta: "1889"
-    },
-
-    // ⭐ NOVAS PERGUNTAS ⭐
-    {
-        pergunta: "Qual animal é conhecido como o 'Rei da Selva'?",
-        opcoes: ["Leão", "Elefante", "Tigre", "Guepardo"],
-        respostaCorreta: "Leão"
+        question: "Qual planeta é conhecido como Planeta Vermelho?",
+        answers: ["Terra", "Júpiter", "Marte", "Vênus"],
+        correct: 2
     },
     {
-        pergunta: "Quanto é 12 × 8?",
-        opcoes: ["96", "108", "88", "104"],
-        respostaCorreta: "96"
-    },
-    {
-        pergunta: "Qual é o continente mais populoso do mundo?",
-        opcoes: ["África", "Europa", "Ásia", "América"],
-        respostaCorreta: "Ásia"
-    },
-    {
-        pergunta: "Qual é o maior oceano do planeta?",
-        opcoes: ["Atlântico", "Índico", "Pacífico", "Ártico"],
-        respostaCorreta: "Pacífico"
+        question: "Qual animal é conhecido como o rei da selva?",
+        answers: ["Tigre", "Leão", "Elefante", "Onça"],
+        correct: 1
     }
 ];
 
-// Elementos do DOM
-const perguntaTitulo = document.getElementById('pergunta-titulo');
-const opcoesRespostas = document.getElementById('opcoes-respostas');
-const btnProxima = document.getElementById('btn-proxima');
-const contadorQuestoes = document.getElementById('contador-questoes');
-const totalQuestoes = document.getElementById('total-questoes');
-const pontuacaoDisplay = document.getElementById('pontuacao');
-const resultadoFinal = document.getElementById('resultado-final');
-const quizCard = document.querySelector('.quiz-card');
-const btnReiniciar = document.getElementById('btn-reiniciar');
-const resultadoPontuacao = document.getElementById('resultado-pontuacao');
-const btnVoltar = document.createElement("button");
+let currentQuestion = 0;
+let score = 0;
 
-// Criar botão VOLTAR AO INÍCIO
-btnVoltar.textContent = "VOLTAR AO INÍCIO";
-btnVoltar.classList.add("btn-principal");
-btnVoltar.style.marginTop = "15px";
-resultadoFinal.appendChild(btnVoltar);
+function loadQuestion() {
+    if (currentQuestion >= questions.length) {
+        endQuiz();
+        return;
+    }
 
-// Variáveis de Estado
-let perguntaAtualIndex = 0;
-let pontuacao = 0;
-let respostaSelecionada = false;
+    document.getElementById("question").innerText = questions[currentQuestion].question;
 
-// Inicialização
-totalQuestoes.textContent = perguntas.length;
-
-// Função para exibir a pergunta
-function exibirPergunta() {
-    resetarEstado();
-
-    resultadoFinal.classList.add('escondido');
-    quizCard.classList.remove('escondido');
-
-    contadorQuestoes.textContent = perguntaAtualIndex + 1;
-
-    const perguntaAtual = perguntas[perguntaAtualIndex];
-    perguntaTitulo.textContent = perguntaAtual.pergunta;
-
-    perguntaAtual.opcoes.forEach(opcao => {
-        const button = document.createElement('button');
-        button.textContent = opcao;
-        button.classList.add('option-btn');
-        opcoesRespostas.appendChild(button);
-
-        if (opcao === perguntaAtual.respostaCorreta) {
-            button.dataset.correct = true;
-        }
-
-        button.addEventListener('click', selecionarResposta);
+    let btns = document.querySelectorAll(".btn");
+    questions[currentQuestion].answers.forEach((ans, i) => {
+        btns[i].innerText = ans;
     });
 }
 
-function selecionarResposta(e) {
-    if (respostaSelecionada) return;
-    respostaSelecionada = true;
-
-    const botao = e.target;
-    const correta = botao.dataset.correct;
-
-    if (correta) {
-        pontuacao++;
-        pontuacaoDisplay.textContent = pontuacao;
-        botao.classList.add('correct');
-    } else {
-        botao.classList.add('incorrect');
-        Array.from(opcoesRespostas.children)
-            .find(btn => btn.dataset.correct)
-            .classList.add('correct');
+function selectAnswer(choice) {
+    if (choice === questions[currentQuestion].correct) {
+        score++;
     }
-
-    Array.from(opcoesRespostas.children).forEach(btn => btn.disabled = true);
-    btnProxima.disabled = false;
+    currentQuestion++;
+    loadQuestion();
 }
 
-function proximaPergunta() {
-    perguntaAtualIndex++;
+function endQuiz() {
+    document.getElementById("question-container").classList.add("hide");
 
-    if (perguntaAtualIndex < perguntas.length) {
-        exibirPergunta();
-    } else {
-        exibirResultado();
-    }
+    let result = document.getElementById("result");
+    result.classList.remove("hide");
+    result.innerHTML = `<h2>Você terminou!</h2>
+                        <p>Sua pontuação: <strong>${score}/${questions.length}</strong></p>`;
+
+    document.getElementById("restartBtn").classList.remove("hide");
 }
 
-function exibirResultado() {
-    quizCard.classList.add("escondido");
-    resultadoFinal.classList.remove("escondido");
-    resultadoPontuacao.textContent = `${pontuacao} / ${perguntas.length}`;
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById("question-container").classList.remove("hide");
+    document.getElementById("result").classList.add("hide");
+    document.getElementById("restartBtn").classList.add("hide");
+
+    loadQuestion();
 }
 
-function resetarEstado() {
-    btnProxima.disabled = true;
-
-    while (opcoesRespostas.firstChild) {
-        opcoesRespostas.removeChild(opcoesRespostas.firstChild);
-    }
-
-    respostaSelecionada = false;
-}
-
-// EVENTOS
-btnProxima.addEventListener('click', proximaPergunta);
-
-btnReiniciar.addEventListener('click', () => {
-    perguntaAtualIndex = 0;
-    pontuacao = 0;
-    pontuacaoDisplay.textContent = "0";
-    exibirPergunta();
-});
-
-// VOLTAR PARA O INÍCIO (reload)
-btnVoltar.addEventListener("click", () => {
-    window.location.reload();
-});
-
-// INÍCIO
-exibirPergunta();
+loadQuestion();
