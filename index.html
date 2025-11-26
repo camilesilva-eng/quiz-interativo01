@@ -3,35 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Neon | Conhecimentos Gerais</title>
+    <title>Quiz Neon</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
+
+    <!-- TELA INICIAL -->
+    <section id="home" class="screen active">
         <h1 class="title">QUIZ NEON</h1>
-        <button id="startBtn" class="start-btn">INICIAR</button>
-    </div>
+        <button id="startBtn" class="btn">INICIAR</button>
+    </section>
 
-    <!-- Tela do Quiz -->
-    <div id="quizBox" class="quiz hidden">
-        <div class="question-box">
-            <p id="question"></p>
-        </div>
-
+    <!-- TELA DO QUIZ -->
+    <section id="quiz" class="screen">
+        <h2 id="question" class="question"></h2>
         <div id="answers" class="answers"></div>
-
         <p id="progress" class="progress"></p>
-    </div>
+    </section>
 
-    <!-- Tela Final -->
-    <div id="resultBox" class="result hidden">
+    <!-- TELA FINAL -->
+    <section id="result" class="screen">
         <h2>Resultado Final</h2>
-        <p id="scoreText"></p>
-        <button id="restartBtn" class="start-btn">JOGAR NOVAMENTE</button>
-    </div>
+        <p id="score"></p>
+        <button id="restartBtn" class="btn">JOGAR NOVAMENTE</button>
+    </section>
 
     <script src="script.js"></script>
 </body>
 </html>
+
