@@ -1,4 +1,4 @@
-// Seleção dos elementos (ID's do seu HTML)
+// Seleção dos elementos (mantido do código anterior)
 const home = document.getElementById("home");
 const quiz = document.getElementById("quiz");
 const result = document.getElementById("result");
@@ -14,18 +14,58 @@ const scoreEl = document.getElementById("score");
 let current = 0;
 let score = 0;
 
-// PERGUNTAS (Seu array de perguntas)
+// 🆕 NOVAS PERGUNTAS ATUALIZADAS
 const questions = [
-    { q: "Qual é o maior planeta do Sistema Solar?", a: ["Terra", "Marte", "Júpiter", "Vênus"], c: 2 },
-    { q: "Quem pintou a Mona Lisa?", a: ["Michelangelo", "Leonardo da Vinci", "Picasso", "Van Gogh"], c: 1 },
-    { q: "Quanto é 12 × 8?", a: ["96", "82", "108", "112"], c: 0 },
-    { q: "Qual é o país do samba e futebol?", a: ["Argentina", "Espanha", "Brasil", "Portugal"], c: 2 },
-    { q: "Qual animal é conhecido como o rei da selva?", a: ["Leão", "Tigre", "Elefante", "Urso"], c: 0 },
-    { q: "Qual é o oceano maior do mundo?", a: ["Atlântico", "Pacífico", "Índico", "Ártico"], c: 1 },
-    { q: "Qual é a capital da França?", a: ["Paris", "Londres", "Roma", "Berlim"], c: 0 },
-    { q: "Quem descobriu o Brasil?", a: ["Cabral", "Vasco da Gama", "Cristóvão Colombo", "Dom Pedro"], c: 0 },
-    { q: "Quanto é 50 + 50?", a: ["70", "80", "100", "120"], c: 2 },
-    { q: "Qual é a cor do céu em um dia claro?", a: ["Verde", "Azul", "Amarelo", "Vermelho"], c: 1 },
+    { 
+        q: "Qual é o planeta mais próximo do Sol?", 
+        a: ["Marte", "Terra", "Mercúrio", "Júpiter"], 
+        c: 2 // Mercúrio (índice 2)
+    },
+    { 
+        q: "Quem pintou a obra “Mona Lisa”?", 
+        a: ["Van Gogh", "Leonardo da Vinci", "Picasso", "Michelangelo"], 
+        c: 1 // Leonardo da Vinci (índice 1)
+    },
+    { 
+        q: "Qual é o maior oceano do mundo?", 
+        a: ["Atlântico", "Pacífico", "Índico", "Ártico"], 
+        c: 1 // Pacífico (índice 1)
+    },
+    { 
+        q: "Quantos lados tem um hexágono?", 
+        a: ["4", "5", "6", "7"], 
+        c: 2 // 6 (índice 2)
+    },
+    { 
+        q: "Qual país venceu a Copa do Mundo de 2002?", 
+        a: ["Alemanha", "Brasil", "Argentina", "França"], 
+        c: 1 // Brasil (índice 1)
+    },
+    { 
+        q: "Quem descobriu o Brasil?", 
+        a: ["Pedro Álvares Cabral", "Cristóvão Colombo", "Dom Pedro I", "Vasco da Gama"], 
+        c: 0 // Pedro Álvares Cabral (índice 0)
+    },
+    { 
+        q: "Em que continente fica o Egito?", 
+        a: ["América", "Europa", "África", "Ásia"], 
+        c: 2 // África (índice 2)
+    },
+    { 
+        q: "Qual é o maior animal terrestre?", 
+        a: ["Leão", "Elefante-africano", "Urso", "Rinoceronte"], 
+        c: 1 // Elefante-africano (índice 1)
+    },
+    { 
+        q: "Em que ano o homem pisou na Lua pela primeira vez?", 
+        a: ["1960", "1969", "1975", "1981"], 
+        c: 1 // 1969 (índice 1)
+    },
+    { 
+        q: "Qual é o elemento químico representado por “O”?", 
+        a: ["Ouro", "Carbono", "Oxigênio", "Hidrogênio"], 
+        c: 2 // Oxigênio (índice 2)
+    },
 ];
 
 // 🟢 1. Botão INICIAR (Funcionando)
